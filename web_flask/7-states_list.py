@@ -9,18 +9,21 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 app = Flask(__name__)
 
 
-@app.route('/states_list', strict_slashes=False)
-def states_list():
-    """ Returns a rendered html template 
-    at the /states_list route, listing all states """
-    states = sorted(storage.all('State').values(), key=lambda s: s.name)
-    return render_template('7-states_list.html', states=states)
-
-
 @app.teardown_appcontext
 def teardown(self):
     """ Removes the current SQLAlchemy Session """
     storage.close()
+
+
+@app.route('/states_list', strict_slashes=False)
+def states_list():
+    """ display a HTML page: (inside the tag BODY)
+    H1 tag: “States”
+    UL tag: with the list of all State objects present in DBStorage sorted
+    by name (A->Z) tip
+    LI tag: description of one State: <state.id>: <B><state.name></B> """
+    states = sorted(storage.all('State').values(), key=lambda s: s.name)
+    return render_template('7-states_list.html', states=states)
 
 
 if __name__ == "__main__":
