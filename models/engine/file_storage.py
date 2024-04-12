@@ -1,14 +1,15 @@
 #!/usr/bin/python3
 """This is the file storage class for AirBnB"""
+
 import json
 import datetime
 from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
 from models.amenity import Amenity
+from models.city import City
 from models.place import Place
 from models.review import Review
+from models.state import State
+from models.user import User
 
 
 class FileStorage:
@@ -76,20 +77,20 @@ class FileStorage:
     def classes(self):
         """Returns a dictionary of valid classes and their references."""
         from models.base_model import BaseModel
-        from models.user import User
-        from models.state import State
-        from models.city import City
         from models.amenity import Amenity
+        from models.city import City
         from models.place import Place
         from models.review import Review
+        from models.state import State
+        from models.user import User
 
         classes = {"BaseModel": BaseModel,
-                   "User": User,
-                   "State": State,
-                   "City": City,
                    "Amenity": Amenity,
+                   "City": City,
                    "Place": Place,
-                   "Review": Review}
+                   "Review": Review,
+                   "State": State,
+                   "User": User}
         return classes
 
     def attributes(self):
@@ -99,18 +100,11 @@ class FileStorage:
                      {"id": str,
                       "created_at": datetime.datetime,
                       "updated_at": datetime.datetime},
-            "User":
-                     {"email": str,
-                      "password": str,
-                      "first_name": str,
-                      "last_name": str},
-            "State":
+            "Amenity":
                      {"name": str},
             "City":
                      {"state_id": str,
                       "name": str},
-            "Amenity":
-                     {"name": str},
             "Place":
                      {"city_id": str,
                       "user_id": str,
@@ -124,8 +118,15 @@ class FileStorage:
                       "longitude": float,
                       "amenity_ids": list},
             "Review":
-            {"place_id": str,
-                         "user_id": str,
-                         "text": str}
+                     {"place_id": str,
+                      "user_id": str,
+                      "text": str},
+            "State":
+                     {"name": str},
+            "User":
+                     {"email": str,
+                      "password": str,
+                      "first_name": str,
+                      "last_name": str}
         }
         return attributes
