@@ -29,7 +29,8 @@ def c_text(text):
     """ display “C ”, followed by the value of the <text> 
 
     replace underscore _ symbols with a space """
-    return "C {}".format(text.replace('_', ' '))
+    formatted_text = text.replace('_', ' ')
+    return "C {}".format(formatted_text)
 
 
 @app.route('/python', defaults={'text': 'is cool'}, strict_slashes=False)
@@ -38,7 +39,8 @@ def python_text(text):
     """ display “Python ”, followed by the value of the <text> 
 
     replace underscore _ symbols with a space """
-    return "Python {}".format(text.replace('_', ' '))
+    formatted_text = text.replace('_', ' ')
+    return "Python {}".format(formatted_text)
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
