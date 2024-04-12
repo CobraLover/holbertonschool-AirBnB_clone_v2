@@ -5,9 +5,7 @@ listening on 0.0.0.0, port 5000
 with Fifth routes
 """
 
-from flask import Flask, escape, request
-
-from flask import render_template
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
