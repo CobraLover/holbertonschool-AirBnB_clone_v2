@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """This is the state class"""
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship
-from os import getenv
 from models.city import City
+from sqlalchemy import Column, Integer, String, ForeignKey, MetaData
+from sqlalchemy.orm import relationship, backref
 import models
+from os import environ
 
 
 class State(BaseModel, Base):
@@ -15,17 +15,18 @@ class State(BaseModel, Base):
     """
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
-    cities = relationship(
-        'City',
-        backref='cities',
-        cascade='all, delete',
-        order_by="City.name"
-    )
 
-    if getenv('HBNB_TYPE_STORAGE') != 'db':
+    if environ.get('HBNB_TYPE_STORAGE') == "db":
+        cities = relationship("City", 
+                backref="state", cascade="all, delete, delete-orphan")
+    else:
         @property
         def cities(self):
-            obj = models.storage.all(City)
-            ls = [v for k, v in obj.items() if v.state_id == self.id]
-            sorted(ls, key=lambda city: city.name)
-            return ls
+            """ Returns the list of City instances with
+            state_id == current State.id """
+            all_cities = models.storage.all(City)
+            state_cities = []
+            for city_ins in all_cities.values():
+                if city_ins.state_id == self.id:
+                    state_cities.append(city_ins)
+            return state_cities
