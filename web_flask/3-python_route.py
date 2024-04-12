@@ -5,7 +5,7 @@ listening on 0.0.0.0, port 5000
 With four Routes
 """
 
-from flask import Flask, escape, request
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -25,7 +25,9 @@ def hbnb():
 
 @app.route('/c/<text>', strict_slashes=False)
 def c_text(text):
-    """ display C and text """
+    """ display “C ”, followed by the value of the <text> 
+
+    replace underscore _ symbols with a space """
     formatted_text = text.replace('_', ' ')
     return "C {}".format(formatted_text)
 
@@ -33,7 +35,9 @@ def c_text(text):
 @app.route('/python', defaults={'text': 'is cool'}, strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def python_text(text):
-    """ display C and text """
+    """ display “Python ”, followed by the value of the <text> 
+
+    replace underscore _ symbols with a space """
     formatted_text = text.replace('_', ' ')
     return "Python {}".format(formatted_text)
 
