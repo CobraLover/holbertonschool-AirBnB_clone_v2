@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """Defines the state class."""
-
 import models
 from sqlalchemy import String, DateTime, Column, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
 from models.city import City
 from os import getenv
+
 
 
 class State(BaseModel, Base):
@@ -21,7 +21,6 @@ class State(BaseModel, Base):
         name (sqlalchemy String): The name of the State.
         cities (sqlalchemy relationship): The State-City relationship.
     """
-
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
 
