@@ -2,9 +2,8 @@
 """Starts a Flask web application"""
 
 from flask import Flask, render_template
-from models import storage, storage.all
-from models.state import State
-from sqlalchemy.orm import scoped_session, sessionmaker
+from models import *
+from models import storage
 
 app = Flask(__name__)
 
@@ -22,7 +21,7 @@ def states_list():
     UL tag: with the list of all State objects present in DBStorage sorted
     by name (A->Z) tip
     LI tag: description of one State: <state.id>: <B><state.name></B> """
-    states = sorted(storage.all('State').values(), key=lambda s: s.name)
+    states = sorted(list(storage.all('State').values()), key=lambda s: s.name)
     return render_template('7-states_list.html', states=states)
 
 
