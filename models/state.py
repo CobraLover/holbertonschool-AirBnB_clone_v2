@@ -1,37 +1,36 @@
 #!/usr/bin/python3
 """Defines the state class."""
-import models
-from sqlalchemy import String, DateTime, Column, ForeignKey
+
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
 from models.city import City
 from os import getenv
+import models
+import shlex
+import os
 
+
+store = os.getenv('HBNB_TYPE_STORAGE')
 
 
 class State(BaseModel, Base):
-    """Represents a state for a MySQL database.
-
-
-    Inherits from SQLAlchemy Base and links to the MySQL table states.
-
-
-    Attributes:
-        __tablename__ (str): The name of the MySQL table to store States.
-        name (sqlalchemy String): The name of the State.
-        cities (sqlalchemy relationship): The State-City relationship.
+    """This is the class for State
+    Attributes: name: input name
     """
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
 
     if getenv('HBNB_TYPE_STORAGE') == 'db':
-        cities = relationship('City', backref='state', cascade='all, delete-orphan')
+        cities = relationship('City', backref='state', cascade='all, 
+                delete, delete-orphan')
     else:
         @property
         def cities(self):
             """Getter attribute in case of file storage"""
-            city_list = []
-            for city in models.storage.all(City).values():
+            list = []
+            for city in storage.all(City).values():
                 if city.state_id == self.id:
-                    city_list.append(city)
-            return city_list
+                    list.append(city)
+            return list
